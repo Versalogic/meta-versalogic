@@ -13,7 +13,7 @@ DESCRIPTION = "U-Boot bootloader with support for Versalogic i.MX6 board. "
 LICENSE = "GPLv2+"
 #LIC_FILES_CHKSUM = "file://Licenses/README;md5=0507cd7da8e7ad6d6701926ec9b84c95"
 
-COMPATIBLE_MACHINE = "(mxs|mx5|mx6|mx6ul|mx7|imx6q-tetra|imx6solo-zebra|imx6dl-zebra)"
+COMPATIBLE_MACHINE = "(mxs|mx5|mx6|mx6ul|mx7|imx6qtetra|imx6solozebra|imx6dlzebra)"
 
 PROVIDES += "u-boot"
 
