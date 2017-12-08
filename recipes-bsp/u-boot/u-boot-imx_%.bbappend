@@ -7,13 +7,13 @@
 
 DEPENDS_mxs += "elftosb-native openssl-native"
 
-SUMMARY = "U-Boot bootloader with support for Versalogic Tetra board"
-DESCRIPTION = "U-Boot bootloader with support for Versalogic Tetra board. "
+SUMMARY = "U-Boot bootloader with support for Versalogic i.MX6 board"
+DESCRIPTION = "U-Boot bootloader with support for Versalogic i.MX6 board. "
 
 LICENSE = "GPLv2+"
 #LIC_FILES_CHKSUM = "file://Licenses/README;md5=0507cd7da8e7ad6d6701926ec9b84c95"
 
-COMPATIBLE_MACHINE = "(mxs|mx5|mx6|mx6ul|mx7|imx6q-tetra|imx6s-tetra)"
+COMPATIBLE_MACHINE = "(mxs|mx5|mx6|mx6ul|mx7|imx6q-tetra|imx6solo-zebra|imx6dl-zebra)"
 
 PROVIDES += "u-boot"
 
