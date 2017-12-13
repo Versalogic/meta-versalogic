@@ -20,6 +20,7 @@ PROVIDES += "u-boot"
 #PV = "v2016.03+git${SRCPV}"
 
 SRCBRANCH = "master"
+LOCALVERSION = "-1.00"
 
 SRC_URI = "git://github.com/Versalogic/u-boot-versalogic.git;branch=${SRCBRANCH};protocol=git"
 
