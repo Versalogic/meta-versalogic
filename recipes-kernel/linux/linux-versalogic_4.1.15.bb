@@ -12,7 +12,7 @@ require recipes-kernel/linux/linux-dtb.inc
 DEPENDS += "lzop-native bc-native"
 
 SRCBRANCH = "master"
-LOCALVERSION = "-1.0.0-krogoth"
+LOCALVERSION = "-1.0.0-versalogic"
 
 #Always update SRCREV based on your last commit
 #SRCREV = "aba8070ca2dbb941788a5f5eea714e3cf8a44b65"
