@@ -11,7 +11,7 @@ require recipes-kernel/linux/linux-dtb.inc
 
 DEPENDS += "lzop-native bc-native"
 
-SRCBRANCH = "4.1.15-1.0.0-versalogic"
+SRCBRANCH = "4.9.11-1.0.0-versalogic"
 LOCALVERSION = "-1.0.0-versalogic"
 
 #Always update SRCREV based on your last commit
