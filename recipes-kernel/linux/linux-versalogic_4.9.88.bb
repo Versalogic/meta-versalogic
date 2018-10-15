@@ -22,4 +22,4 @@ FSL_KERNEL_DEFCONFIG = "${BUILDDIR}/../meta-versalogic/recipes-kernel/linux/linu
 KERNEL_SRC = "git://github.com/Versalogic/linux-versalogic.git;protocol=git"
 SRC_URI = "${KERNEL_SRC};branch=${SRCBRANCH} file://defconfig"
 
-COMPATIBLE_MACHINE = "(imx6qtetra|imx6zebra)"
+COMPATIBLE_MACHINE = "(imx6qtetra|imx6zebra|imx6qswordtail|imx6dlswordtail)"
