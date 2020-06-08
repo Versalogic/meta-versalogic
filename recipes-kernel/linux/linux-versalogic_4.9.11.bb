@@ -7,11 +7,11 @@ SUMMARY = "Linux Kernel for Versalogic i.MX6 board"
 DESCRIPTION = "Linux Kernel for Versalogic i.MX6 board."
 
 require recipes-kernel/linux/linux-imx.inc
-require recipes-kernel/linux/linux-dtb.inc
+#require recipes-kernel/linux/linux-dtb.inc
 
 DEPENDS += "lzop-native bc-native"
 
-SRCBRANCH = "4.9.11-1.0.0-versalogic"
+SRCBRANCH = "5.4.3-1.0.0-versalogic"
 LOCALVERSION = "-1.0.0-versalogic"
 
 #Always update SRCREV based on your last commit

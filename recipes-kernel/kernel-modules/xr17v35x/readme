@@ -1,0 +1,179 @@
+=============================================================================
+
+        MaxLinear PCIe Multiport Device Driver Ver 2.6 Installation Guide
+         for Linux Kernel 2.6.32 and newer (Tested on various kernels from 2.6.32 to 4.15.x)
+			Copyright (C) 2019, MaxLinear.
+=============================================================================
+
+Note: Exar is now part of MaxLinear. All description below will be referred as MaxLinear/Exar.
+
+Revision History
+----------------
+Changes from Ver 2.6 to 1.0
+- Add support for Acces I/O P104-COM232-8 card.
+- Remove SUBDIR warning messages when building. 
+
+Changes from Ver 2.5 to 2.6
+- Ensure LCR bit-7 = 0 when accessing RHR/THR/IER/ISR to avoid incorrect register write.
+- Remove warning messages when building with gcc 7.4.0 (Ubuntu 18.04).
+
+Changes from Ver 2.4 to 2.5
+- Improve baud the accuracy on 12Mbps.
+- Add option to  select for RS485 control between DTR# and RTS# pin. 
+- Add timer function patch for Kernel 4.15 and later support
+
+Changes from Ver 2.3 to 2.4
+- Add INT0 read for "nobody cares" interrupt issue
+
+Releasing 2.2c as version 2.3 (no changes from 2.2c)
+
+Changes from Ver 2.2b to 2.2c
+- Macro XR_17v35x_UART_RHR was not defined. Issue fixed.
+
+Changes from Ver 2.2a to 2.2b
+- RS-485 was not getting disabled correctly. Issue Fixed. 
+ 
+Changes from Ver 2.2 to 2.2a
+- For receiving data, replaced memcpy_fromio() routine with serial_in(). This was done because the former was dropping data on receive. 
+
+Changes from Ver 2.1 to 2.2
+- Added support for non standard baud rates
+- Configure MPIO's as inputs.
+- Added a parameter to enable disable internal loopback
+- Fixed bug related to Fractional buad rate generator.
+- RS485 disabled by default. 
+- To enable RS485 configure the parameter ENABLE_RS485
+
+Changes from Ver 2.0 to 2.1
+- Added support for Software flow control and Auto Hardware flow control
+- Enabled Auto RS 485
+- Modified logic for  Fractional baud rate generator
+- Added Support for XR17D15x devices
+
+Changes from Ver 1.5 to 2.0 (version 1.6 - 1.9 are unofficial versions, never posted on website):
+- Fixed issue when un-registering ports (rmmod) that prevented re-registering all of the ports (insmod)
+- Added logic in interrupt service to ensure that LCR bit-7 = 0 before reading ISR/IIR
+- Added support for 4X Sampling Mode, 8X Sampling Mode, 9-bit (Multidrop) Mode, RS-485 Mode
+- Added support for 2.6.32 to 3.17.x (and possibly newer)
+
+-----------------------------------------------------------------------------
+1. Introduction
+
+   The PCIe Multiport serial driver Ver 2.2, supports the following multiport
+   boards.
+
+      - XR17V258 PCI Multiport (8 Channels) Boards
+      - XR17V254 PCI Multiport (4 Channels) Boards
+      - XR17V252 PCI Multiport (2 Channels) Boards
+	- XR17V358 & XR17V4354 PCIe Multiport (8 Channels) Boards
+      - XR17V354 PCIe Multiport (4 Channels) Boards
+      - XR17V352 PCIe Multiport (2 Channels) Boards
+      - XR17V4358 & XR17V8354 PCIe Multiport (12 Channels) Boards
+      - XR17V8358 PCIe Multiport (16 Channels) Boards
+
+   This driver and installation procedure have been tested on various
+   kernel versions from 2.6.32 to 3.17.x.
+
+   All the drivers and utilities are published in form of source code under
+   GNU General Public License in this version. Please refer to GNU General
+   Public License announcement in each source code file for more detail.
+
+   This version of driver can be installed as Loadable Module (Module driver)
+   or built-in into kernel (Static driver). You may refer to following
+   installation procedure for suitable one. Before you install the driver,
+   please refer to hardware installation procedure in the User's Manual.
+
+   We assume the user should be familiar with following documents.
+   - Serial-HOWTO
+   - Kernel-HOWTO
+
+-----------------------------------------------------------------------------
+2. System Requirement
+   - Hardware platform: Intel x86
+   - Kernel version: 2.6.32 or newer
+   - Maximum of 256 ports can be installed in any PCIe board combination
+   - This driver has been tested on various kernel versions from 2.6.32 to 3.17.x.  
+     It is strongly recommended that the user do a complete install of all components
+     to ensure that this driver works correctly.
+
+-----------------------------------------------------------------------------
+3. Installation
+
+   3.1 Hardware installation
+      
+      You may need to adjust IRQ usage in BIOS to avoid IRQ conflict with legacy ISA devices. 
+
+   3.2 Driver Installation
+	  For all the newer kernels the support for MaxLinear/Exar PCI/PCIe UARTs is already integrated in the generic 
+	  serial drivers that comes with the kernel source. If you want to use the XR17V35x/XR17D15x PCIe/PCI 
+	  UARTs to only send/receive data then you may use the generic serial driver available in the linux 
+	  kernel. When using generic driver the XR17V35x device will be listed as "ttyS" instead of "ttyXR" 
+	  under /dev/ folder. In order to determine which "ttyS" are assigned to XR17V35x you can open file 
+	  "/proc/tty/driver/serial" the PCI/PCIe UARTs will be listed as MMIO devices.
+	  However, if you intend to use the Enhanced features of the device(i.e. Auto RTS/CTS, Auto RS485 etc)
+	  or enable disable MPIO, in that case you will need the custom driver. Follow the steps below for using
+	  the custom driver, in this example we will be using XR17V358: 
+	  (MaxLinear/Exar AN-225 Application Note can be referred for installing custom driver)
+
+	  A.) You will need to unbind the serial driver. Follow the steps below to unbind the serial driver. 
+
+		root$ lspci -vd 13a8:*
+		03:00.0 Serial controller: Exar Corp. Device 0358 (rev 03) (prog-if 02 [16550])
+		Flags: fast devsel, IRQ 30
+		Memory at f3ffc000 (32-bit, non-prefetchable) [size=16K]
+		Capabilities: [50] MSI: Enable- Count=1/1 Maskable- 64bit+
+		Capabilities: [78] Power Management version 3
+		Capabilities: [80] Express Endpoint, MSI 01
+		Capabilities: [100] Virtual Channel
+		Kernel driver in use: serial
+
+		As you can see in the last line above that the kernel is using generic "serial" module. 
+		Note: For newer kernel (i.e.: 4.11 and later), "exar_serial" may be seen. 
+		      If so, use "exar_serial" instead of "serial" for the following unbind commands
+
+		root$ ls /sys/bus/pci/drivers/serial/
+		0000:03:00.0 bind new_id remove_id uevent unbind
+		root$ echo -n "0000:03:00.0" > /sys/bus/pci/drivers/serial/unbind
+
+		This will unbind the generic serial driver from XR17V35x device. Now you can compile and install 
+		the customer driver. After successful installation the device should be listed in /dev folder as 
+		"ttyXR" as mentioned in the README.
+	
+	  B.) Module driver configuration
+       
+		1. Find "Makefile" in driver source file path, then run
+			  # make
+		  
+		   After the driver file "xr17v35x.ko" is properly compiled, then run
+			  # insmod xr17v35x.ko
+				or				
+			  # insmod ./xr17v35x.ko
+
+		   This will activate the module driver. You may run "lsmod" to check if "xr17v35x.ko" is activated.
+
+		2. This module registers MaxLinear/Exar ports as "/dev/ttyXR0", "/dev/ttyXR1", etc. You may use "minicom" or
+		   its custom serial application to test the ports
+   
+		3. You may refer to /var/log/messages or /var/log/kern.log to check the latest status log reported 
+		   by this driver whenever activated to verify driver installation.
+
+	  C.) Driver files and device naming convention
+
+		This driver creates traditional serial device names, "/dev/ttyXR0" onwards.
+
+        Device naming when multiple boards are installed
+        -----------------------------------------------
+        Naming convention for each multiport board is pre-defined as below, assuming 2 XR17V358 boards, 
+		1 XR17V354 board and 1 XR17V352 board.
+
+        Board Num.	 Port Name
+        1st board (358)	ttyXR0  - ttyXR7
+        2nd board (358)	ttyXR8  - ttyXR15
+        3rd board (354)	ttyXR16 - ttyXR19
+        4th board (352)	ttyXR24 - ttyXR25
+ 
+4. Troubleshooting
+
+   The boot time error mesages and solutions are stated as clearly as
+   possible. If all the possible solutions fail, please contact our technical
+   support team (uarttechsupport@exar.com) to get more help.

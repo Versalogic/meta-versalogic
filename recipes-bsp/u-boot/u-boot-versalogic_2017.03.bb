@@ -25,7 +25,7 @@ LOCALVERSION = "-1.0.0-versalogic"
 SRC_URI = "git://github.com/Versalogic/u-boot-versalogic.git;branch=${SRCBRANCH};protocol=git"
 
 #SRCREV is the commit number, must be always changed for a new version
-SRCREV = "AUTOINC"
+SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git"
 
