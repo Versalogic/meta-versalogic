@@ -11,7 +11,7 @@ require recipes-kernel/linux/linux-imx.inc
 
 DEPENDS += "lzop-native bc-native"
 
-SRCBRANCH = "lf-5.4.y"
+SRCBRANCH = "5.4.3-1.0.0-versalogic"
 LOCALVERSION = "-versalogic"
 
 #Always update SRCREV based on your last commit
@@ -19,7 +19,7 @@ LOCALVERSION = "-versalogic"
 SRCREV = "AUTOINC"
 
 FSL_KERNEL_DEFCONFIG = "${BUILDDIR}/../meta-versalogic/recipes-kernel/linux/linux-versalogic/defconfig"
-KERNEL_SRC = "git://source.codeaurora.org/external/imx/linux-imx;protocol=git"
+KERNEL_SRC = "https://github.com/Versalogic/linux-versalogic;protocol=git"
 SRC_URI = "${KERNEL_SRC};branch=${SRCBRANCH} file://defconfig"
 #SRC_URI += " file://dts.patch "
 
