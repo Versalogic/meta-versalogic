@@ -19,7 +19,7 @@ LOCALVERSION = "-versalogic"
 SRCREV = "AUTOINC"
 
 FSL_KERNEL_DEFCONFIG = "${BUILDDIR}/../meta-versalogic/recipes-kernel/linux/linux-versalogic/defconfig"
-KERNEL_SRC = "https://github.com/Versalogic/linux-versalogic;protocol=git"
+KERNEL_SRC = "git://github.com/Versalogic/linux-versalogic;protocol=https"
 SRC_URI = "${KERNEL_SRC};branch=${SRCBRANCH} file://defconfig"
 #SRC_URI += " file://dts.patch "
 
