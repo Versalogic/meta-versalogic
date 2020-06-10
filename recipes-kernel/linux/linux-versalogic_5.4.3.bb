@@ -9,6 +9,8 @@ DESCRIPTION = "Linux Kernel for Versalogic i.MX6 board."
 require recipes-kernel/linux/linux-imx.inc
 #require recipes-kernel/linux/linux-dtb.inc
 
+LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
+
 DEPENDS += "lzop-native bc-native"
 
 SRCBRANCH = "5.4.3-1.0.0-versalogic"
