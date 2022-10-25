@@ -19,7 +19,7 @@ LOCALVERSION = "-1.0.0-versalogic"
 SRCREV = "AUTOINC"
 
 FSL_KERNEL_DEFCONFIG = "${BUILDDIR}/../meta-versalogic/recipes-kernel/linux/linux-versalogic/defconfig"
-KERNEL_SRC = "git://github.com/Versalogic/linux-versalogic.git;protocol=git"
+KERNEL_SRC = "git://github.com/Versalogic/linux-versalogic.git;protocol=https"
 SRC_URI = "${KERNEL_SRC};branch=${SRCBRANCH} file://defconfig"
 
 COMPATIBLE_MACHINE = "(imx6qtetra|imx6solozebra|imx6dlzebra)"
