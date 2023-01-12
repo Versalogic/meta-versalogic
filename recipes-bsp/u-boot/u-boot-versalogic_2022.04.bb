@@ -19,10 +19,10 @@ PROVIDES += "u-boot virtual/bootloader u-boot-versalogic"
 
 #PV = "v2017.03+git${SRCPV}"
 
-SRCBRANCH = "2022.04-versalogic"
+SRCBRANCH = "2022.04-1.0.0-versalogic"
 LOCALVERSION = "-versalogic"
 
-SRC_URI = "git://github.com/nbinford-versalogic/u-boot-versalogic.git;branch=${SRCBRANCH};protocol=https"
+SRC_URI = "git://github.com/versalogic/u-boot-versalogic.git;branch=${SRCBRANCH};protocol=https"
 
 #SRCREV is the commit number, must be always changed for a new version
 SRCREV = "${AUTOREV}"
