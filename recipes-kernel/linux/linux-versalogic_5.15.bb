@@ -14,13 +14,13 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 DEPENDS += "lzop-native bc-native"
 
-SRCBRANCH = "5.15-versalogic"
+SRCBRANCH = "5.15.32-1.0.0-versalogic"
 LOCALVERSION = "-versalogic"
 #Always update SRCREV based on your last commit
 #SRCREV = "b89386b65491eb176923d6150a7088dbb4f3cc55"
 SRCREV = "${AUTOREV}"
 
-KERNEL_SRC = "git://github.com/nbinford-versalogic/linux-versalogic;protocol=https"
+KERNEL_SRC = "git://github.com/versalogic/linux-versalogic;protocol=https"
 SRC_URI = "${KERNEL_SRC};branch=${SRCBRANCH} "
 
 #SRC_URI:append = " file://versalogic_defconfig"
