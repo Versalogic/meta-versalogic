@@ -13,5 +13,5 @@ cp -r ${WORKDIR}/usr ${D}/
 cp -r ${WORKDIR}/lib ${D}/
 }
 
-FILES_${PN} += "/"
+FILES:${PN} += "/"
 
